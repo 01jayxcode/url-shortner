@@ -1,9 +1,14 @@
 const supabase = require("../config/supabase");
 
-const createShortUrl = async (short_code, long_url) => {
+const createShortUrl = async (
+  short_code,
+  long_url,
+  uid = null,
+  user_id = null,
+) => {
   const { data, error } = await supabase
     .from("urls")
-    .insert({ short_code, long_url })
+    .insert({ short_code, long_url, uid, user_id })
     .select()
     .single();
   if (error) throw error;

@@ -5,14 +5,14 @@ const {
   incrementClicks,
   getStats,
 } = require("../services/url.service");
-
 const shorten = async (req, res, next) => {
   try {
-    const { long_url } = req.body;
+    const { long_url, uid } = req.body;
     if (!long_url)
       return res.status(400).json({ error: "long_url is required" });
     const short_code = nanoid(7);
-    await createShortUrl(short_code, long_url);
+    const user_id = req.user?.user_id || null;
+    await createShortUrl(short_code, long_url, uid || null, user_id);
     res.status(201).json({
       short_code,
       short_url: `${process.env.BASE_URL}/${short_code}`,
