@@ -15,7 +15,7 @@ const getUrlByCode = async (short_code) => {
     .from("urls")
     .select("*")
     .eq("short_code", short_code)
-    .single();
+    .maybeSingle();
   if (error) throw error;
   return data;
 };
@@ -29,7 +29,7 @@ const getStats = async (short_code) => {
     .from("urls")
     .select("short_code, long_url, clicks, created_at")
     .eq("short_code", short_code)
-    .single();
+    .maybeSingle();
   if (error) throw error;
   return data;
 };
