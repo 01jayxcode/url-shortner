@@ -26,7 +26,10 @@ const getUrlByCode = async (short_code) => {
 };
 
 const incrementClicks = async (short_code) => {
-  await supabase.rpc("increment_clicks", { code: short_code });
+  const { error } = await supabase.rpc("increment_clicks", {
+    code: short_code,
+  });
+  if (error) console.error("[increment_clicks error]", error.message);
 };
 
 const getStats = async (short_code) => {

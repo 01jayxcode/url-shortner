@@ -26,8 +26,11 @@ const shorten = async (req, res, next) => {
 const redirect = async (req, res, next) => {
   try {
     const url = await getUrlByCode(req.params.code);
-    if (!url) return res.status(404).json({ error: "URL not found" });
-    incrementClicks(req.params.code); // fire and forget
+    if (!url)
+      return res
+        .status(404)
+        .sendFile(path.join(__dirname, "../../public/404.html"));
+    incrementClicks(req.params.code); // fire and forget — no await, non-blocking
     res.redirect(url.long_url);
   } catch (err) {
     next(err);
